@@ -88,7 +88,32 @@
                 <TextBox x:Name="SearchBox" Grid.Column="0" Style="{StaticResource PickerSearchBoxStyle}"
                          TextChanged="SearchBox_TextChanged"/>
                 <ComboBox x:Name="FilterBox" Grid.Column="2" Style="{StaticResource PickerFilterBoxStyle}"
-                          DisplayMemberPath="Label" SelectionChanged="FilterBox_SelectionChanged"/>
+                          SelectionChanged="FilterBox_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock x:Name="CategoryLabel" Text="{Binding Label}"/>
+                                <TextBlock x:Name="AllLabel" Text="{DynamicResource PickerFilterAll}" Visibility="Collapsed"/>
+                                <TextBlock x:Name="FavoritesLabel" Text="{DynamicResource PickerFilterFavorite}" Visibility="Collapsed"/>
+                                <TextBlock x:Name="RecentLabel" Text="{DynamicResource PickerFilterRecent}" Visibility="Collapsed"/>
+                            </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Key}" Value="all">
+                                    <Setter TargetName="CategoryLabel" Property="Visibility" Value="Collapsed"/>
+                                    <Setter TargetName="AllLabel" Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Key}" Value="favorites">
+                                    <Setter TargetName="CategoryLabel" Property="Visibility" Value="Collapsed"/>
+                                    <Setter TargetName="FavoritesLabel" Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Key}" Value="recent">
+                                    <Setter TargetName="CategoryLabel" Property="Visibility" Value="Collapsed"/>
+                                    <Setter TargetName="RecentLabel" Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </Grid>
 
             <Grid Grid.Row="3">

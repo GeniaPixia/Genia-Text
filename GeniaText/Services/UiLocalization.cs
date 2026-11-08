@@ -20,4 +20,7 @@ internal static class UiLocalization
 
     internal static string Get(string key) =>
         System.Windows.Application.Current.TryFindResource(key) as string ?? key;
+
+    internal static string Format(string key, params object?[] args) =>
+        string.Format(System.Globalization.CultureInfo.CurrentCulture, Get(key), args);
 }

@@ -26,7 +26,7 @@ public partial class EditorProWindow : Window
     private void UpdateSelectionState()
     {
         int count = PhraseList.SelectedItems.Count;
-        SelectionSummaryText.Text = count == 0 ? "Фразы не выбраны" : $"Выбрано фраз: {count}";
+        SelectionSummaryText.Text = count == 0 ? UiLocalization.Get("ProNoneSelected") : UiLocalization.Format("ProSelectionCount", count);
         ApplyCategoryButton.IsEnabled = count > 0;
         FavoriteButton.IsEnabled = count > 0;
         UnfavoriteButton.IsEnabled = count > 0;
@@ -39,8 +39,8 @@ public partial class EditorProWindow : Window
             int changed = _editorPro.ApplyCategory(SelectedPhrases, CategoryBox.Text);
             if (changed > 0) _phraseStore.ScheduleSave();
             ActionStatusText.Text = changed == 0
-                ? "Категория уже установлена у выбранных фраз."
-                : $"Категория изменена у фраз: {changed}.";
+                ? UiLocalization.Get("ProCategoryUnchanged")
+                : UiLocalization.Format("ProCategoryChanged", changed);
         }
         catch (ArgumentException ex)
         {
@@ -57,10 +57,10 @@ public partial class EditorProWindow : Window
         int changed = _editorPro.SetFavorite(SelectedPhrases, isFavorite);
         if (changed > 0) _phraseStore.ScheduleSave();
         ActionStatusText.Text = changed == 0
-            ? "Состояние избранного уже совпадает."
+            ? UiLocalization.Get("ProFavoriteUnchanged")
             : isFavorite
-                ? $"Добавлено в избранное: {changed}."
-                : $"Удалено из избранного: {changed}.";
+                ? UiLocalization.Format("ProFavoriteAdded", changed)
+                : UiLocalization.Format("ProFavoriteRemoved", changed);
     }
 
     private void FindDuplicates_Click(object sender, RoutedEventArgs e)
@@ -79,8 +79,8 @@ public partial class EditorProWindow : Window
             PhraseList.ScrollIntoView(duplicates[0]);
 
         DuplicateSummaryText.Text = groups.Count == 0
-            ? "Повторяющиеся фразы не найдены."
-            : $"Найдено групп: {groups.Count}; выделено фраз: {duplicates.Count}. Ничего не удалено.";
+            ? UiLocalization.Get("ProDuplicateNone")
+            : UiLocalization.Format("ProDuplicateFound", groups.Count, duplicates.Count);
     }
 
     private void Close_Click(object sender, RoutedEventArgs e) => Close();

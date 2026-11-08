@@ -78,8 +78,8 @@ public partial class PhraseEditorWindow : Window
         bool useRecycleBin = _settingsStore.Current.Features.RecycleBinEnabled;
         MessageBoxResult result = MessageBox.Show(
             useRecycleBin
-                ? $"Переместить фразу «{selected.DisplayTitle}» в корзину?"
-                : $"Удалить фразу «{selected.DisplayTitle}»?",
+                ? UiLocalization.Format("EditorDeleteToTrash", selected.DisplayTitle)
+                : UiLocalization.Format("EditorDeleteDirect", selected.DisplayTitle),
             "GeniaText", MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (result != MessageBoxResult.Yes) return;
 
@@ -93,7 +93,7 @@ public partial class PhraseEditorWindow : Window
             {
                 AppLog.Error("Перемещение фразы в корзину", ex);
                 MessageBox.Show(
-                    $"Фраза не удалена: сохранить её в корзине не удалось.\n\n{ex.Message}",
+                    UiLocalization.Get("EditorTrashSaveFailure") + "\n\n" + ex.Message,
                     "GeniaText", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
@@ -114,8 +114,8 @@ public partial class PhraseEditorWindow : Window
     {
         var dialog = new OpenFileDialog
         {
-            Title = "Импорт фраз GeniaText",
-            Filter = "Фразы GeniaText (*.json)|*.json|Все файлы (*.*)|*.*",
+            Title = UiLocalization.Get("EditorImportDialogTitle"),
+            Filter = UiLocalization.Get("EditorImportFilter"),
             CheckFileExists = true
         };
         if (dialog.ShowDialog(this) != true) return;
@@ -133,21 +133,21 @@ public partial class PhraseEditorWindow : Window
             else
             {
                 MessageBoxResult choice = MessageBox.Show(
-                    "Добавить импортируемые фразы к текущим?\n\nДа — добавить\nНет — заменить текущие\nОтмена — ничего не менять",
-                    "Импорт GeniaText", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    UiLocalization.Get("EditorImportChoice"),
+                    UiLocalization.Get("ImportDialogCaption"), MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                 if (choice == MessageBoxResult.Cancel) return;
                 append = choice == MessageBoxResult.Yes;
             }
 
             int count = _phraseStore.Import(dialog.FileName, append);
             PhrasesList.SelectedIndex = _phraseStore.Phrases.Count > 0 ? 0 : -1;
-            MessageBox.Show($"Импортировано фраз: {count}.", "GeniaText",
+            MessageBox.Show(UiLocalization.Format("EditorImportDone", count), "GeniaText",
                 MessageBoxButton.OK, MessageBoxImage.Information);
         }
         catch (Exception ex) when (ex is InvalidDataException or IOException or UnauthorizedAccessException or JsonException)
         {
             AppLog.Error("Импорт фраз", ex);
-            MessageBox.Show($"Не удалось импортировать фразы.\n\n{ex.Message}", "GeniaText",
+            MessageBox.Show(UiLocalization.Get("EditorImportError") + "\n\n" + ex.Message, "GeniaText",
                 MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
@@ -192,7 +192,7 @@ public partial class PhraseEditorWindow : Window
             // instead of reaching App.DispatcherUnhandledException and closing GeniaText.
             AppLog.Error("Открытие центра восстановления", ex);
             MessageBox.Show(
-                $"Инструменты восстановления не удалось открыть. GeniaText продолжит работу.\n\n{ex.Message}",
+                UiLocalization.Get("EditorRecoveryError") + "\n\n" + ex.Message,
                 "GeniaText", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
         finally
@@ -216,15 +216,15 @@ public partial class PhraseEditorWindow : Window
             int count = RecycleBin.Items.Count;
             RecycleBinButton.IsEnabled = count > 0;
             RecycleBinButton.ToolTip = count > 0
-                ? $"Удалённых фраз: {count:N0}"
-                : "Корзина пуста";
+                ? UiLocalization.Format("EditorTrashCount", count)
+                : UiLocalization.Get("EditorTrashEmpty");
         }
         catch (Exception ex) when (IsExpectedModuleException(ex))
         {
             // Unknown is not the same as empty: keep the entry point available
             // so Recovery can show the detailed, fail-closed load error.
             RecycleBinButton.IsEnabled = true;
-            RecycleBinButton.ToolTip = "Не удалось проверить корзину. Откройте для подробностей.";
+            RecycleBinButton.ToolTip = UiLocalization.Get("EditorTrashLoadError");
             AppLog.Error("Проверка корзины в редакторе", ex);
         }
     }
@@ -233,8 +233,8 @@ public partial class PhraseEditorWindow : Window
     {
         var dialog = new SaveFileDialog
         {
-            Title = "Экспорт фраз GeniaText",
-            Filter = "Фразы GeniaText (*.json)|*.json",
+            Title = UiLocalization.Get("EditorExportDialogTitle"),
+            Filter = UiLocalization.Get("EditorExportFilter"),
             FileName = $"GeniaText-phrases-{DateTime.Now:yyyy-MM-dd}.json",
             AddExtension = true,
             DefaultExt = ".json"
@@ -244,12 +244,12 @@ public partial class PhraseEditorWindow : Window
         try
         {
             _phraseStore.Export(dialog.FileName);
-            MessageBox.Show("Фразы экспортированы.", "GeniaText", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(UiLocalization.Get("EditorExportDone"), "GeniaText", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
             AppLog.Error("Экспорт фраз", ex);
-            MessageBox.Show($"Не удалось экспортировать фразы.\n\n{ex.Message}", "GeniaText",
+            MessageBox.Show(UiLocalization.Get("EditorExportError") + "\n\n" + ex.Message, "GeniaText",
                 MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
@@ -281,12 +281,12 @@ public partial class PhraseEditorWindow : Window
             _phraseStore.DiscardEmptyPhrases();
             _phraseStore.Flush();
             if (showSuccess)
-                MessageBox.Show("Фразы сохранены.", "GeniaText", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(UiLocalization.Get("EditorSaveDone"), "GeniaText", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
             AppLog.Error("Сохранение фраз", ex);
-            MessageBox.Show($"Не удалось сохранить фразы.\n\n{ex.Message}", "GeniaText",
+            MessageBox.Show(UiLocalization.Get("EditorSaveError") + "\n\n" + ex.Message, "GeniaText",
                 MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }

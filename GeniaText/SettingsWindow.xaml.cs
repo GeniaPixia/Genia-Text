@@ -87,7 +87,7 @@ public partial class SettingsWindow : Window
         if (!_applyHotkey(modifier.Value, key.Value))
         {
             MessageBox.Show(
-                $"Не удалось зарегистрировать {GlobalHotkey.Format(modifier.Value, key.Value)}. Скорее всего, комбинация уже занята другой программой.",
+                UiLocalization.Format("SettingsHotkeyError", GlobalHotkey.Format(modifier.Value, key.Value)),
                 "GeniaText", MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }
@@ -129,7 +129,8 @@ public partial class SettingsWindow : Window
         {
             AppLog.Error("Сохранение настроек/portable mode", ex);
             MessageBox.Show(
-                $"Настройки сохранены в памяти, но режим хранения изменить не удалось.\n\n{ex.Message}\n\nЕсли GeniaText находится в Program Files, перенесите его в папку, куда у вас есть право записи.",
+                UiLocalization.Get("SettingsStorageError") + "\n\n" + ex.Message + "\n\n" +
+                UiLocalization.Get("SettingsStorageHint"),
                 "GeniaText", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
         catch

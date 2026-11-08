@@ -1,4 +1,5 @@
 using GeniaText.Features;
+using GeniaText.Services;
 
 namespace GeniaText;
 
@@ -15,9 +16,11 @@ public partial class ImportPreviewWindow : Window
         InitializeComponent();
         PreviewList.ItemsSource = preview.Items;
         SummaryText.Text =
-            $"Всего в файле: {preview.SourceCount:N0}    Новых: {preview.NewCount:N0}    " +
-            $"Точных повторов: {preview.DuplicateCount:N0}    Конфликтов ID: {preview.IdConflictCount:N0}" +
-            (preview.SkippedEmptyCount > 0 ? $"    Пустых пропущено: {preview.SkippedEmptyCount:N0}" : string.Empty);
+            UiLocalization.Format("ImportSummary", preview.SourceCount, preview.NewCount,
+                preview.DuplicateCount, preview.IdConflictCount) +
+            (preview.SkippedEmptyCount > 0
+                ? UiLocalization.Format("ImportSkippedEmpty", preview.SkippedEmptyCount)
+                : string.Empty);
     }
 
     public ImportApplyMode? SelectedMode { get; private set; }
@@ -31,8 +34,8 @@ public partial class ImportPreviewWindow : Window
     private void Replace_Click(object sender, RoutedEventArgs e)
     {
         MessageBoxResult confirmation = MessageBox.Show(
-            "Заменить все текущие фразы содержимым проверенного файла?\n\nПеред изменением GeniaText создаст резервную копию.",
-            "Импорт GeniaText", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            UiLocalization.Get("ImportReplaceConfirm"),
+            UiLocalization.Get("ImportDialogCaption"), MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (confirmation != MessageBoxResult.Yes) return;
         SelectedMode = ImportApplyMode.Replace;
         DialogResult = true;
