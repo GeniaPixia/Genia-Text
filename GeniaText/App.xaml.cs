@@ -43,7 +43,7 @@ public partial class App : System.Windows.Application
             if (!string.IsNullOrWhiteSpace(_settingsStore.LoadWarning))
             {
                 MessageBox.Show(
-                    $"Настройки не удалось безопасно загрузить. GeniaText запущен с настройками по умолчанию, но исходный settings.json не будет перезаписан.\n\n{_settingsStore.LoadWarning}",
+                    UiLocalization.Get("AppSettingsLoadWarning") + "\n\n" + _settingsStore.LoadWarning,
                     "GeniaText", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
@@ -54,11 +54,11 @@ public partial class App : System.Windows.Application
             }
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or InvalidDataException)
             {
-                MessageBox.Show($"GeniaText не смог загрузить ваши фразы. Исходный файл оставлен без изменений.\n\n{ex.Message}",
+                MessageBox.Show(UiLocalization.Get("AppPhraseLoadError") + "\n\n" + ex.Message,
                     "GeniaText", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             _phraseStore.SaveFailed += (_, message) => Dispatcher.Invoke(() =>
-                MessageBox.Show($"Автосохранение не удалось.\n\n{message}", "GeniaText",
+                MessageBox.Show(UiLocalization.Get("AppAutoSaveError") + "\n\n" + message, "GeniaText",
                     MessageBoxButton.OK, MessageBoxImage.Warning));
 
             _pasteService = new PasteService(_settingsStore);
@@ -92,7 +92,7 @@ public partial class App : System.Windows.Application
         catch (Exception ex)
         {
             AppLog.Error("Ошибка запуска", ex);
-            MessageBox.Show($"Не удалось запустить GeniaText.\n\n{ex.Message}", "GeniaText",
+            MessageBox.Show(UiLocalization.Get("AppStartupError") + "\n\n" + ex.Message, "GeniaText",
                 MessageBoxButton.OK, MessageBoxImage.Error);
             ExitApplication();
         }
@@ -168,12 +168,12 @@ public partial class App : System.Windows.Application
             _settingsStore.Current.HotkeyModifiers = defaultModifiers;
             _settingsStore.Current.HotkeyVirtualKey = defaultVirtualKey;
             _settingsStore.ScheduleSave();
-            MessageBox.Show("Сохранённая горячая клавиша занята другой программой. GeniaText вернулся к Ctrl+Space.",
+            MessageBox.Show(UiLocalization.Get("AppHotkeyFallback"),
                 "GeniaText", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
         else
         {
-            MessageBox.Show("Не удалось зарегистрировать глобальную горячую клавишу. Открывайте GeniaText через значок в трее и выберите другую комбинацию в настройках.",
+            MessageBox.Show(UiLocalization.Get("AppHotkeyRegistrationError"),
                 "GeniaText", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
@@ -218,7 +218,7 @@ public partial class App : System.Windows.Application
         catch (Exception ex)
         {
             AppLog.Error("Автозапуск", ex);
-            MessageBox.Show($"Не удалось изменить автозапуск.\n\n{ex.Message}", "GeniaText",
+            MessageBox.Show(UiLocalization.Get("AppAutostartError") + "\n\n" + ex.Message, "GeniaText",
                 MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }

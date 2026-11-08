@@ -13,7 +13,7 @@ Branch: `develop/0.8.0`. The released `v0.7.0` is frozen.
 ## Stages
 1. Language policy, settings data model and deterministic tests (this checkpoint).
 2. RU/EN dictionaries, Settings language selector, Picker chrome and tray commands (implemented; Windows compilation pending).
-3. Picker filters and editor/Pro/import/settings runtime messages are localized without touching frozen Picker code. Remaining recovery and startup error messages are next. Windows build pending.
+3. Recovery, startup, editor and import runtime messages localized. The frozen Picker code-behind retains its original emergency paste-failure message (Core-contract exception). Windows build and UI smoke test pending.
 4. Windows build/regression tests, then a separate 0.8 alpha.
 
 ## Guard

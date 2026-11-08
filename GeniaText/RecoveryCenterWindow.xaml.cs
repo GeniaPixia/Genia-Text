@@ -66,21 +66,21 @@ public partial class RecoveryCenterWindow : Window
         catch (Exception ex) when (IsRecoverableRecoveryException(ex))
         {
             TrashTab.IsEnabled = false;
-            ShowFailure("Корзину не удалось открыть", ex);
+            ShowFailure(UiLocalization.Get("RecoveryTrashOpenError"), ex);
         }
     }
 
     private void RefreshTrashState()
     {
-        TrashCountText.Text = $"Удалённых фраз: {_recycleBin.Items.Count:N0}";
+        TrashCountText.Text = UiLocalization.Format("RecoveryTrashCount", _recycleBin.Items.Count);
         if (TrashList.SelectedIndex < 0 && _recycleBin.Items.Count > 0)
             TrashList.SelectedIndex = 0;
     }
 
     private async Task LoadBackupsAsync()
     {
-        BackupCountText.Text = "Загрузка списка…";
-        SnapshotSummaryText.Text = "Выберите резервную копию после загрузки списка";
+        BackupCountText.Text = UiLocalization.Get("RecoveryLoadingList");
+        SnapshotSummaryText.Text = UiLocalization.Get("RecoverySelectAfterLoad");
         BackupList.IsEnabled = false;
         DeleteBackupButton.IsEnabled = false;
         BackupList.ItemsSource = null;
@@ -95,19 +95,19 @@ public partial class RecoveryCenterWindow : Window
             if (_closing) return;
 
             BackupList.ItemsSource = snapshots;
-            BackupCountText.Text = $"Резервных копий: {snapshots.Count:N0}";
+            BackupCountText.Text = UiLocalization.Format("RecoveryBackupCount", snapshots.Count);
             BackupList.SelectedIndex = -1;
             SnapshotSummaryText.Text = snapshots.Count == 0
-                ? "Резервных копий пока нет"
-                : "Выберите резервную копию";
+                ? UiLocalization.Get("RecoveryNoBackups")
+                : UiLocalization.Get("RecoverySelectBackup");
         }
         catch (Exception ex) when (IsRecoverableRecoveryException(ex))
         {
             if (_closing) return;
             BackupsTab.IsEnabled = false;
-            BackupCountText.Text = "Список недоступен";
-            SnapshotSummaryText.Text = "Резервные копии не удалось открыть";
-            ShowFailure("Список резервных копий не удалось открыть", ex);
+            BackupCountText.Text = UiLocalization.Get("RecoveryListUnavailable");
+            SnapshotSummaryText.Text = UiLocalization.Get("RecoveryBackupsOpenError");
+            ShowFailure(UiLocalization.Get("RecoveryBackupListOpenError"), ex);
         }
         finally
         {
@@ -146,7 +146,7 @@ public partial class RecoveryCenterWindow : Window
         {
             DeleteBackupButton.IsEnabled = false;
             BackupPhraseList.ItemsSource = null;
-            SnapshotSummaryText.Text = "Выберите резервную копию";
+            SnapshotSummaryText.Text = UiLocalization.Get("RecoverySelectBackup");
             return;
         }
 
@@ -156,7 +156,7 @@ public partial class RecoveryCenterWindow : Window
         _backupPreviewCts = cts;
         BackupPhraseList.ItemsSource = null;
         BackupPhraseList.SelectedIndex = -1;
-        SnapshotSummaryText.Text = "Загрузка копии…";
+        SnapshotSummaryText.Text = UiLocalization.Get("RecoveryLoadingBackup");
 
         try
         {
@@ -172,7 +172,7 @@ public partial class RecoveryCenterWindow : Window
 
             BackupPhraseList.ItemsSource = phrases;
             BackupPhraseList.SelectedIndex = phrases.Count > 0 ? 0 : -1;
-            SnapshotSummaryText.Text = $"Фраз в копии: {phrases.Count:N0}";
+            SnapshotSummaryText.Text = UiLocalization.Format("RecoveryPhrasesInBackup", phrases.Count);
         }
         catch (OperationCanceledException) when (cts.IsCancellationRequested)
         {
@@ -182,8 +182,8 @@ public partial class RecoveryCenterWindow : Window
         {
             if (_closing || cts.IsCancellationRequested) return;
             BackupPhraseList.ItemsSource = null;
-            SnapshotSummaryText.Text = "Копию не удалось прочитать";
-            ShowFailure("Резервную копию не удалось прочитать", ex);
+            SnapshotSummaryText.Text = UiLocalization.Get("RecoveryBackupReadStatus");
+            ShowFailure(UiLocalization.Get("RecoveryBackupReadError"), ex);
         }
         finally
         {
@@ -207,7 +207,7 @@ public partial class RecoveryCenterWindow : Window
         catch (Exception ex) when (IsRecoverableRecoveryException(ex))
         {
             _phraseStore.Phrases.Remove(restored);
-            ShowFailure("Фразу не удалось восстановить", ex);
+            ShowFailure(UiLocalization.Get("RecoveryRestorePhraseError"), ex);
             return;
         }
 
@@ -216,12 +216,12 @@ public partial class RecoveryCenterWindow : Window
         {
             _recycleBin.Remove(item);
             RefreshTrashState();
-            MessageBox.Show("Фраза восстановлена.", "GeniaText", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(UiLocalization.Get("RecoveryPhraseRestored"), "GeniaText", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         catch (Exception ex) when (IsRecoverableRecoveryException(ex))
         {
             RefreshTrashState();
-            ShowFailure("Фраза восстановлена, но запись осталась в корзине", ex);
+            ShowFailure(UiLocalization.Get("RecoveryItemLeftInTrash"), ex);
         }
     }
 
@@ -229,7 +229,7 @@ public partial class RecoveryCenterWindow : Window
     {
         if (TrashList.SelectedItem is not RecycleBinItem item) return;
         MessageBoxResult result = MessageBox.Show(
-            $"Удалить «{item.DisplayTitle}» из корзины без возможности восстановления?",
+            UiLocalization.Format("RecoveryRemoveTrashConfirm", item.DisplayTitle),
             "GeniaText", MessageBoxButton.YesNo, MessageBoxImage.Warning);
         if (result != MessageBoxResult.Yes) return;
 
@@ -240,7 +240,7 @@ public partial class RecoveryCenterWindow : Window
         }
         catch (Exception ex) when (IsRecoverableRecoveryException(ex))
         {
-            ShowFailure("Запись не удалось удалить из корзины", ex);
+            ShowFailure(UiLocalization.Get("RecoveryRemoveTrashError"), ex);
         }
     }
 
@@ -248,7 +248,7 @@ public partial class RecoveryCenterWindow : Window
     {
         if (_recycleBin.Items.Count == 0) return;
         MessageBoxResult result = MessageBox.Show(
-            "Очистить всю корзину без возможности восстановления?",
+            UiLocalization.Get("RecoveryEmptyTrashConfirm"),
             "GeniaText", MessageBoxButton.YesNo, MessageBoxImage.Warning);
         if (result != MessageBoxResult.Yes) return;
 
@@ -259,7 +259,7 @@ public partial class RecoveryCenterWindow : Window
         }
         catch (Exception ex) when (IsRecoverableRecoveryException(ex))
         {
-            ShowFailure("Корзину не удалось очистить", ex);
+            ShowFailure(UiLocalization.Get("RecoveryEmptyTrashError"), ex);
         }
     }
 
@@ -268,8 +268,8 @@ public partial class RecoveryCenterWindow : Window
         if (BackupList.SelectedItem is not BackupSnapshotInfo snapshot) return;
 
         MessageBoxResult result = MessageBox.Show(
-            $"Удалить резервную копию от {snapshot.CreatedAtLabel}?\n\nЭто действие нельзя отменить.",
-            "Удаление резервной копии", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            UiLocalization.Format("RecoveryDeleteBackupConfirm", snapshot.CreatedAtLabel),
+            UiLocalization.Get("RecoveryDeleteBackupTitle"), MessageBoxButton.YesNo, MessageBoxImage.Warning);
         if (result != MessageBoxResult.Yes) return;
 
         _backupPreviewCts?.Cancel();
@@ -278,7 +278,7 @@ public partial class RecoveryCenterWindow : Window
         BackupList.IsEnabled = false;
         BackupList.SelectedItem = null;
         BackupPhraseList.ItemsSource = null;
-        SnapshotSummaryText.Text = "Удаление копии…";
+        SnapshotSummaryText.Text = UiLocalization.Get("RecoveryDeletingBackup");
 
         try
         {
@@ -295,8 +295,8 @@ public partial class RecoveryCenterWindow : Window
             if (_closing) return;
             BackupList.IsEnabled = true;
             DeleteBackupButton.IsEnabled = BackupList.SelectedItem is BackupSnapshotInfo;
-            SnapshotSummaryText.Text = "Копию не удалось удалить";
-            ShowFailure("Резервную копию не удалось удалить", ex);
+            SnapshotSummaryText.Text = UiLocalization.Get("RecoveryBackupDeleteStatus");
+            ShowFailure(UiLocalization.Get("RecoveryBackupDeleteError"), ex);
         }
     }
 
@@ -310,13 +310,13 @@ public partial class RecoveryCenterWindow : Window
             _phraseStore.Phrases.Add(restored);
             _phraseStore.Flush();
             DataChanged = true;
-            MessageBox.Show("Выбранная фраза добавлена в текущую базу.", "GeniaText",
+            MessageBox.Show(UiLocalization.Get("RecoverySelectedPhraseAdded"), "GeniaText",
                 MessageBoxButton.OK, MessageBoxImage.Information);
         }
         catch (Exception ex) when (IsRecoverableRecoveryException(ex))
         {
             _phraseStore.Phrases.Remove(restored);
-            ShowFailure("Фразу не удалось восстановить", ex);
+            ShowFailure(UiLocalization.Get("RecoveryRestorePhraseError"), ex);
         }
     }
 
@@ -327,22 +327,21 @@ public partial class RecoveryCenterWindow : Window
     private void RestoreSnapshot(bool append)
     {
         if (BackupList.SelectedItem is not BackupSnapshotInfo snapshot) return;
-        string action = append ? "объединить с текущей базой" : "заменить текущую базу";
         MessageBoxResult confirmation = MessageBox.Show(
-            $"{char.ToUpperInvariant(action[0])}{action[1..]} выбранной резервной копией?\n\nПеред изменением GeniaText создаст ещё одну резервную копию.",
-            "Восстановление GeniaText", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            UiLocalization.Get(append ? "RecoveryMergeSnapshotConfirm" : "RecoveryReplaceSnapshotConfirm"),
+            UiLocalization.Get("RecoveryRestoreTitle"), MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (confirmation != MessageBoxResult.Yes) return;
 
         try
         {
             int count = _phraseStore.Import(_backupBrowser.GetValidatedPath(snapshot), append);
             DataChanged = true;
-            MessageBox.Show($"Восстановлено фраз: {count:N0}.", "GeniaText",
+            MessageBox.Show(UiLocalization.Format("RecoveryRestoredCount", count), "GeniaText",
                 MessageBoxButton.OK, MessageBoxImage.Information);
         }
         catch (Exception ex) when (IsRecoverableRecoveryException(ex))
         {
-            ShowFailure("Резервную копию не удалось восстановить", ex);
+            ShowFailure(UiLocalization.Get("RecoveryRestoreBackupError"), ex);
         }
     }
 
