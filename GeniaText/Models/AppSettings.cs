@@ -16,6 +16,10 @@ public sealed class AppSettings
     /// keeps the same small, predictable Ctrl+Space -> choose -> Enter/Space flow.
     /// </summary>
     public FeatureSettings Features { get; set; } = new();
+
+    // Auto uses Russian for ru-* Windows UI cultures, English otherwise.
+    // Additive to settings.json; phrase data and Core are unaffected.
+    public string InterfaceLanguage { get; set; } = "Auto";
 }
 
 public sealed class FeatureSettings

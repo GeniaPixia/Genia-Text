@@ -8,6 +8,7 @@ internal static class SettingsSanitizer
 
     internal static void Sanitize(AppSettings settings)
     {
+        settings.InterfaceLanguage = InterfaceLanguagePolicy.Normalize(settings.InterfaceLanguage);
         settings.Features ??= new FeatureSettings();
         settings.Features.AppProfileRules ??= string.Empty;
         if (settings.Features.AppProfileRules.Length > MaxAppProfileRulesLength)

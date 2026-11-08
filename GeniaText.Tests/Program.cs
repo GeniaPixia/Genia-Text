@@ -1,5 +1,6 @@
 using GeniaText.Features;
 using GeniaText.Models;
+using System.Globalization;
 
 internal static class Program
 {
@@ -9,6 +10,11 @@ internal static class Program
     private static int Main()
     {
         Run("Feature defaults are OFF", FeatureDefaultsAreOff);
+        Run("Interface language defaults to Auto", LanguageDefault);
+        Run("Auto language resolves Russian cultures", RussianAuto);
+        Run("Auto language resolves other cultures to English", EnglishAuto);
+        Run("Manual language overrides Windows culture", ManualOverride);
+        Run("Invalid language setting is sanitized", InvalidLanguage);
         Run("Smart templates expand deterministic tokens", SmartTemplatesExpand);
         Run("Smart templates preserve unknown tokens", SmartTemplatesPreserveUnknown);
         Run("Advanced search handles multi-term query", AdvancedSearchMultiTerm);
@@ -54,6 +60,36 @@ internal static class Program
                !f.AppProfilesEnabled && !f.CompatibilityModeEnabled && !f.AdvancedBackupsEnabled &&
                !f.RecycleBinEnabled && !f.BackupBrowserEnabled && !f.ImportPreviewEnabled,
             "An optional module is enabled by default.");
+    }
+
+    private static void LanguageDefault()
+    {
+        AssertEqual("Auto", new AppSettings().InterfaceLanguage);
+    }
+
+    private static void RussianAuto()
+    {
+        AssertEqual("Russian", InterfaceLanguagePolicy.Resolve("Auto", CultureInfo.GetCultureInfo("ru-RU")));
+        AssertEqual("Russian", InterfaceLanguagePolicy.Resolve("Auto", CultureInfo.GetCultureInfo("ru-KZ")));
+    }
+
+    private static void EnglishAuto()
+    {
+        foreach (string culture in new[] { "en-US", "de-DE", "uk-UA" })
+            AssertEqual("English", InterfaceLanguagePolicy.Resolve("Auto", CultureInfo.GetCultureInfo(culture)));
+    }
+
+    private static void ManualOverride()
+    {
+        AssertEqual("English", InterfaceLanguagePolicy.Resolve("English", CultureInfo.GetCultureInfo("ru-RU")));
+        AssertEqual("Russian", InterfaceLanguagePolicy.Resolve("Russian", CultureInfo.GetCultureInfo("de-DE")));
+    }
+
+    private static void InvalidLanguage()
+    {
+        var settings = new AppSettings { InterfaceLanguage = "invalid" };
+        SettingsSanitizer.Sanitize(settings);
+        AssertEqual("Auto", settings.InterfaceLanguage);
     }
 
     private static void SmartTemplatesExpand()
@@ -230,6 +266,7 @@ internal static class Program
         original.Features.BackupBrowserEnabled = true;
         original.Features.ImportPreviewEnabled = true;
         original.Features.AppProfileRules = "chrome=Web";
+        original.InterfaceLanguage = "Russian";
         var options = new JsonSerializerOptions
         {
             NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowNamedFloatingPointLiterals
@@ -243,6 +280,7 @@ internal static class Program
         Assert(copy.Features.BackupBrowserEnabled, "BackupBrowser flag was lost.");
         Assert(copy.Features.ImportPreviewEnabled, "ImportPreview flag was lost.");
         AssertEqual("chrome=Web", copy.Features.AppProfileRules);
+        AssertEqual("Russian", copy.InterfaceLanguage);
     }
 
     private static void SettingsSanitization()
