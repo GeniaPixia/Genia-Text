@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="SettingsWindowTitle">Settings — GeniaText</sys:String>
+    <sys:String x:Key="SettingsHeader">GeniaText Settings</sys:String>
+    <sys:String x:Key="SettingsSubtitle">The core workflow is unchanged. Enable optional modules as needed.</sys:String>
+    <sys:String x:Key="SettingsGeneralTab">General</sys:String>
+    <sys:String x:Key="SettingsFeaturesTab">Features</sys:String>
+    <sys:String x:Key="SettingsHotkey">Hotkey to open GeniaText</sys:String>
+    <sys:String x:Key="SettingsHotkeyDefault">Default: Ctrl+Space</sys:String>
+    <sys:String x:Key="SettingsPortable">Portable mode</sys:String>
+    <sys:String x:Key="SettingsPortableDesc">Phrases, settings, backups, and logs are stored next to GeniaText.exe.</sys:String>
+    <sys:String x:Key="SettingsPortableRestart">Changes take effect after a restart.</sys:String>
+    <sys:String x:Key="SettingsOptionalNote">Optional modules on the Features tab are disabled by default. With all modules off, Ctrl+Space → choose phrase → Enter/Space remains unchanged.</sys:String>
+    <sys:String x:Key="SettingsModulesHeader">Optional modules</sys:String>
+    <sys:String x:Key="SettingsModulesHint">A disabled module does not participate in the core workflow.</sys:String>
+    <sys:String x:Key="SettingsEditorPro">Editor Pro</sys:String>
+    <sys:String x:Key="SettingsEditorProDesc">Batch category and favorites management, with safe duplicate detection in a separate editor.</sys:String>
+    <sys:String x:Key="SettingsSmartTemplates">Smart templates</sys:String>
+    <sys:String x:Key="SettingsSmartTemplatesDesc">Expand {date}, {time}, and {datetime} before pasting. Unrecognized placeholders remain unchanged.</sys:String>
+    <sys:String x:Key="SettingsAdvancedSearch">Advanced search</sys:String>
+    <sys:String x:Key="SettingsAdvancedSearchDesc">Search for multiple terms and tolerate small typos in titles, categories and phrase text.</sys:String>
+    <sys:String x:Key="SettingsUsageHistory">Usage history</sys:String>
+    <sys:String x:Key="SettingsUsageHistoryDesc">Locally records successful pastes and adds a Recent filter.</sys:String>
+    <sys:String x:Key="SettingsAppProfiles">Application profiles</sys:String>
+    <sys:String x:Key="SettingsAppProfilesDesc">Automatically select a category for the application that opened the Picker.</sys:String>
+    <sys:String x:Key="SettingsAppRules">Rules: process=category</sys:String>
+    <sys:String x:Key="SettingsCompatibility">Enhanced paste compatibility</sys:String>
+    <sys:String x:Key="SettingsCompatibilityDesc">Adds another focus restore attempt before Ctrl+V. Enable only if standard paste is unreliable in a specific app.</sys:String>
+    <sys:String x:Key="SettingsAdvancedBackups">Extended backups</sys:String>
+    <sys:String x:Key="SettingsAdvancedBackupsDesc">During changes, back up phrases.json at most every 10 minutes and keep up to 30 copies.</sys:String>
+    <sys:String x:Key="SettingsRecycleBin">Deleted phrases bin</sys:String>
+    <sys:String x:Key="SettingsRecycleBinDesc">Save a local copy before deleting a phrase. Recovery is available from a separate button.</sys:String>
+    <sys:String x:Key="SettingsBackupBrowser">Browse backups</sys:String>
+    <sys:String x:Key="SettingsBackupBrowserDesc">Browse local Backups, restore a phrase or full backup, and delete a selected backup. Keep up to 10 copies, or 30 with extended backups.</sys:String>
+    <sys:String x:Key="SettingsImportPreview">Safe import preview</sys:String>
+    <sys:String x:Key="SettingsImportPreviewDesc">Preview new phrases, exact duplicates, and ID conflicts before importing. Nothing changes without confirmation.</sys:String>
+    <sys:String x:Key="SettingsCancel">Cancel</sys:String>
+    <sys:String x:Key="SettingsSave">Save</sys:String>
+    <sys:String x:Key="PickerHint">Select a phrase and press Enter or Space</sys:String>
+    <sys:String x:Key="PickerManage">Phrases</sys:String>
+    <sys:String x:Key="PickerEmpty">No phrases found</sys:String>
+    <sys:String x:Key="PickerFooter">↑↓ — select   Enter / Space — paste   Esc — hide</sys:String>
+    <sys:String x:Key="PickerInsert">Paste</sys:String>
+    <sys:String x:Key="SettingsLanguageLabel">Interface language</sys:String>
+    <sys:String x:Key="SettingsLanguageHint">Auto: Russian Windows → RU; others → EN</sys:String>
+    <sys:String x:Key="LanguageAutomatic">Automatic</sys:String>
+    <sys:String x:Key="LanguageRestartNotice">Interface language changed. Restart GeniaText to apply it.</sys:String>
+    <sys:String x:Key="TrayOpen">Open GeniaText</sys:String>
+    <sys:String x:Key="TrayEditor">Phrase editor</sys:String>
+    <sys:String x:Key="TraySettings">Settings</sys:String>
+    <sys:String x:Key="TrayAutostart">Start with Windows</sys:String>
+    <sys:String x:Key="TrayExit">Exit</sys:String>
+</ResourceDictionary>

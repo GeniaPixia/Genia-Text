@@ -39,6 +39,7 @@ public partial class App : System.Windows.Application
             AppLog.Initialize(_paths);
             _settingsStore = new AppSettingsStore(_paths);
             _settingsStore.Load();
+            UiLocalization.Apply(_settingsStore.Current.InterfaceLanguage);
             if (!string.IsNullOrWhiteSpace(_settingsStore.LoadWarning))
             {
                 MessageBox.Show(
@@ -129,20 +130,20 @@ public partial class App : System.Windows.Application
         };
 
         var menu = new Forms.ContextMenuStrip();
-        var openItem = new Forms.ToolStripMenuItem("Открыть GeniaText");
+        var openItem = new Forms.ToolStripMenuItem(UiLocalization.Get("TrayOpen"));
         openItem.Click += (_, _) => Dispatcher.Invoke(() =>
         {
             _pickerWindow?.CaptureTargetWindow();
             _pickerWindow?.ShowPicker();
         });
-        var editorItem = new Forms.ToolStripMenuItem("Редактор фраз");
+        var editorItem = new Forms.ToolStripMenuItem(UiLocalization.Get("TrayEditor"));
         editorItem.Click += (_, _) => Dispatcher.Invoke(OpenEditor);
-        var settingsItem = new Forms.ToolStripMenuItem("Настройки");
+        var settingsItem = new Forms.ToolStripMenuItem(UiLocalization.Get("TraySettings"));
         settingsItem.Click += (_, _) => Dispatcher.Invoke(OpenSettings);
-        _autostartItem = new Forms.ToolStripMenuItem("Автозапуск") { CheckOnClick = false };
+        _autostartItem = new Forms.ToolStripMenuItem(UiLocalization.Get("TrayAutostart")) { CheckOnClick = false };
         try { _autostartItem.Checked = _autostartService?.IsEnabled == true; } catch { }
         _autostartItem.Click += (_, _) => Dispatcher.Invoke(ToggleAutostart);
-        var exitItem = new Forms.ToolStripMenuItem("Выход");
+        var exitItem = new Forms.ToolStripMenuItem(UiLocalization.Get("TrayExit"));
         exitItem.Click += (_, _) => Dispatcher.Invoke(ExitApplication);
 
         menu.Items.Add(openItem);

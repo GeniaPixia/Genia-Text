@@ -50,6 +50,16 @@ public partial class SettingsWindow : Window
         KeyBox.SelectedItem = _keyOptions.First(x => x.Value == settings.HotkeyVirtualKey);
         PortableModeCheckBox.IsChecked = _paths.ConfiguredPortableMode;
 
+        var languageOptions = new List<LanguageOption>
+        {
+            new(UiLocalization.Get("LanguageAutomatic"), "Auto"),
+            new("Русский", "Russian"),
+            new("English", "English")
+        };
+        LanguageBox.ItemsSource = languageOptions;
+        string currentLanguage = InterfaceLanguagePolicy.Normalize(settings.InterfaceLanguage);
+        LanguageBox.SelectedItem = languageOptions.First(x => x.Value == currentLanguage);
+
         FeatureSettings features = settings.Features;
         EditorProCheckBox.IsChecked = features.EditorProEnabled;
         SmartTemplatesCheckBox.IsChecked = features.SmartTemplatesEnabled;
@@ -72,6 +82,7 @@ public partial class SettingsWindow : Window
         AppSettings settings = _settingsStore.Current;
         uint oldModifiers = settings.HotkeyModifiers;
         uint oldVirtualKey = settings.HotkeyVirtualKey;
+        string oldLanguage = InterfaceLanguagePolicy.Normalize(settings.InterfaceLanguage);
 
         if (!_applyHotkey(modifier.Value, key.Value))
         {
@@ -83,6 +94,7 @@ public partial class SettingsWindow : Window
 
         settings.HotkeyModifiers = modifier.Value;
         settings.HotkeyVirtualKey = key.Value;
+        settings.InterfaceLanguage = (LanguageBox.SelectedItem as LanguageOption)?.Value ?? "Auto";
 
         FeatureSettings features = settings.Features;
         features.EditorProEnabled = EditorProCheckBox.IsChecked == true;
@@ -105,6 +117,11 @@ public partial class SettingsWindow : Window
             _flushData();
             bool portableMode = PortableModeCheckBox.IsChecked == true;
             _paths.PreparePortableMode(portableMode);
+            if (!string.Equals(oldLanguage, settings.InterfaceLanguage, StringComparison.Ordinal))
+            {
+                MessageBox.Show(UiLocalization.Get("LanguageRestartNotice"), "GeniaText",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+            }
             DialogResult = true;
             Close();
         }
@@ -138,3 +155,4 @@ public partial class SettingsWindow : Window
 }
 
 internal sealed record HotkeyOption(string Label, uint Value);
+internal sealed record LanguageOption(string Label, string Value);

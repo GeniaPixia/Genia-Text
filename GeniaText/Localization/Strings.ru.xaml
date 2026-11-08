@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="SettingsWindowTitle">Настройки — GeniaText</sys:String>
+    <sys:String x:Key="SettingsHeader">Настройки GeniaText</sys:String>
+    <sys:String x:Key="SettingsSubtitle">Основной быстрый сценарий остается прежним. Дополнительные модули включаются отдельно.</sys:String>
+    <sys:String x:Key="SettingsGeneralTab">Основные</sys:String>
+    <sys:String x:Key="SettingsFeaturesTab">Возможности</sys:String>
+    <sys:String x:Key="SettingsHotkey">Горячая клавиша открытия</sys:String>
+    <sys:String x:Key="SettingsHotkeyDefault">По умолчанию: Ctrl+Space</sys:String>
+    <sys:String x:Key="SettingsPortable">Портативный режим</sys:String>
+    <sys:String x:Key="SettingsPortableDesc">Фразы, настройки, резервные копии и журнал хранятся рядом с GeniaText.exe.</sys:String>
+    <sys:String x:Key="SettingsPortableRestart">Изменение применяется после перезапуска.</sys:String>
+    <sys:String x:Key="SettingsOptionalNote">Все дополнительные возможности на соседней вкладке по умолчанию выключены. Если их не включать, GeniaText работает по тому же базовому сценарию: Ctrl+Space → выбор фразы → Enter/Space.</sys:String>
+    <sys:String x:Key="SettingsModulesHeader">Подключаемые модули</sys:String>
+    <sys:String x:Key="SettingsModulesHint">Выключенный модуль не участвует в основном сценарии работы.</sys:String>
+    <sys:String x:Key="SettingsEditorPro">Редактор Pro</sys:String>
+    <sys:String x:Key="SettingsEditorProDesc">Отдельное окно для пакетной смены категории, управления избранным и безопасного поиска повторяющихся фраз.</sys:String>
+    <sys:String x:Key="SettingsSmartTemplates">Умные шаблоны</sys:String>
+    <sys:String x:Key="SettingsSmartTemplatesDesc">Подстановка {date}, {time} и {datetime} непосредственно перед вставкой. Неизвестные конструкции остаются без изменений.</sys:String>
+    <sys:String x:Key="SettingsAdvancedSearch">Расширенный поиск</sys:String>
+    <sys:String x:Key="SettingsAdvancedSearchDesc">Поиск по нескольким словам и осторожная коррекция небольших опечаток в названии, категории и тексте.</sys:String>
+    <sys:String x:Key="SettingsUsageHistory">История использования</sys:String>
+    <sys:String x:Key="SettingsUsageHistoryDesc">Запоминает только локально время и количество успешных вставок и добавляет фильтр «Недавние».</sys:String>
+    <sys:String x:Key="SettingsAppProfiles">Профили приложений</sys:String>
+    <sys:String x:Key="SettingsAppProfilesDesc">При открытии окна выбора фраз автоматически выбирает категорию для приложения, из которого был вызван GeniaText.</sys:String>
+    <sys:String x:Key="SettingsAppRules">Правила: process=категория</sys:String>
+    <sys:String x:Key="SettingsCompatibility">Расширенная совместимость вставки</sys:String>
+    <sys:String x:Key="SettingsCompatibilityDesc">Добавляет дополнительную попытку вернуть фокус перед Ctrl+V. Включайте только если стандартная вставка нестабильна в конкретной программе.</sys:String>
+    <sys:String x:Key="SettingsAdvancedBackups">Расширенные резервные копии</sys:String>
+    <sys:String x:Key="SettingsAdvancedBackupsDesc">Во время изменений делает периодическую копию phrases.json не чаще одного раза в 10 минут и хранит до 30 копий.</sys:String>
+    <sys:String x:Key="SettingsRecycleBin">Корзина удалённых фраз</sys:String>
+    <sys:String x:Key="SettingsRecycleBinDesc">Удаление из редактора сначала сохраняет локальную копию фразы в корзине. Восстановление открывается отдельной кнопкой.</sys:String>
+    <sys:String x:Key="SettingsBackupBrowser">Просмотр резервных копий</sys:String>
+    <sys:String x:Key="SettingsBackupBrowserDesc">Показывает локальные копии из папки Backups, позволяет восстановить фразу или всю копию и удалить выбранную копию. В обычном режиме хранится до 10 копий; при расширенном — до 30.</sys:String>
+    <sys:String x:Key="SettingsImportPreview">Безопасный предпросмотр импорта</sys:String>
+    <sys:String x:Key="SettingsImportPreviewDesc">Перед импортом показывает новые фразы, точные повторы и конфликты ID. До подтверждения база не меняется.</sys:String>
+    <sys:String x:Key="SettingsCancel">Отмена</sys:String>
+    <sys:String x:Key="SettingsSave">Сохранить</sys:String>
+    <sys:String x:Key="PickerHint">Выберите фразу и нажмите Enter или Space</sys:String>
+    <sys:String x:Key="PickerManage">Фразы</sys:String>
+    <sys:String x:Key="PickerEmpty">Фразы не найдены</sys:String>
+    <sys:String x:Key="PickerFooter">↑↓ — выбор   Enter / Space — вставить   Esc — скрыть</sys:String>
+    <sys:String x:Key="PickerInsert">Вставить</sys:String>
+    <sys:String x:Key="SettingsLanguageLabel">Язык интерфейса</sys:String>
+    <sys:String x:Key="SettingsLanguageHint">Авто: русский Windows → RU; остальные → EN</sys:String>
+    <sys:String x:Key="LanguageAutomatic">Автоматически</sys:String>
+    <sys:String x:Key="LanguageRestartNotice">Язык интерфейса изменён. Для применения перезапустите GeniaText.</sys:String>
+    <sys:String x:Key="TrayOpen">Открыть GeniaText</sys:String>
+    <sys:String x:Key="TrayEditor">Редактор фраз</sys:String>
+    <sys:String x:Key="TraySettings">Настройки</sys:String>
+    <sys:String x:Key="TrayAutostart">Автозапуск</sys:String>
+    <sys:String x:Key="TrayExit">Выход</sys:String>
+</ResourceDictionary>

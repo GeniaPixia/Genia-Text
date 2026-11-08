@@ -69,12 +69,12 @@
                     </Image>
                     <StackPanel Grid.Column="1" Margin="5,0,0,0">
                         <TextBlock Text="GeniaText" FontSize="18" FontWeight="SemiBold"/>
-                        <TextBlock Text="Выберите фразу и нажмите Enter или Space" FontSize="11" Margin="0,2,0,0"
+                        <TextBlock Text="{DynamicResource PickerHint}" FontSize="11" Margin="0,2,0,0"
                                    Foreground="{StaticResource TextSecondary}"/>
                     </StackPanel>
                 </Grid>
 
-                <Button Grid.Column="2" Style="{StaticResource DefaultButton}" Content="Фразы"
+                <Button Grid.Column="2" Style="{StaticResource DefaultButton}" Content="{DynamicResource PickerManage}"
                         ClickMode="Press" MinWidth="84" Padding="10,5" Height="32"
                         VerticalAlignment="Top" Click="Editor_Click"/>
             </Grid>
@@ -153,7 +153,7 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <TextBlock x:Name="EmptyMessage" Text="Фразы не найдены" FontSize="12.5"
+                <TextBlock x:Name="EmptyMessage" Text="{DynamicResource PickerEmpty}" FontSize="12.5"
                            Foreground="{StaticResource TextSecondary}" HorizontalAlignment="Center"
                            VerticalAlignment="Center" Visibility="Collapsed"/>
             </Grid>
@@ -164,8 +164,8 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock VerticalAlignment="Center" FontSize="11" Foreground="{StaticResource TextSecondary}"
-                           Text="↑↓ — выбор   Enter / Space — вставить   Esc — скрыть"/>
-                <Button Grid.Column="1" Style="{StaticResource PrimaryButton}" Content="Вставить"
+                           Text="{DynamicResource PickerFooter}"/>
+                <Button Grid.Column="1" Style="{StaticResource PrimaryButton}" Content="{DynamicResource PickerInsert}"
                         MinWidth="90" Height="32" Padding="12,5" Click="Insert_Click"/>
             </Grid>
     </Grid>
