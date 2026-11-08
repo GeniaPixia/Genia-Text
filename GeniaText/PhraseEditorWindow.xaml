@@ -1,7 +1,7 @@
 <Window x:Class="GeniaText.PhraseEditorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Управление фразами — GeniaText" Width="1060" Height="650"
+        Title="{DynamicResource EditorTitle}" Width="1060" Height="650"
         MinWidth="940" MinHeight="540" WindowStartupLocation="CenterScreen"
         Background="{StaticResource WindowBackground}"
         Icon="pack://application:,,,/Assets/GeniaText.ico">
@@ -18,24 +18,24 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <StackPanel VerticalAlignment="Top">
-                <TextBlock Text="Управление фразами" FontSize="21" FontWeight="SemiBold"/>
-                <TextBlock Text="Редактирование, импорт, экспорт, восстановление и настройки." FontSize="11.5" Margin="0,4,0,0"
+                <TextBlock Text="{DynamicResource EditorHeading}" FontSize="21" FontWeight="SemiBold"/>
+                <TextBlock Text="{DynamicResource EditorHint}" FontSize="11.5" Margin="0,4,0,0"
                            Foreground="{StaticResource TextSecondary}"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
-                <Button x:Name="EditorProButton" Style="{StaticResource PrimaryButton}" Content="Редактор Pro"
+                <Button x:Name="EditorProButton" Style="{StaticResource PrimaryButton}" Content="{DynamicResource EditorProButton}"
                         MinWidth="106" Padding="12,5" Margin="0,0,7,0" Visibility="Collapsed"
                         Click="EditorPro_Click"/>
-                <Button x:Name="RecycleBinButton" Style="{StaticResource DefaultButton}" Content="Корзина"
+                <Button x:Name="RecycleBinButton" Style="{StaticResource DefaultButton}" Content="{DynamicResource EditorTrashButton}"
                         MinWidth="82" Padding="12,5" Margin="0,0,7,0" Visibility="Collapsed"
                         ToolTipService.ShowOnDisabled="True"
                         Click="RecycleBin_Click"/>
-                <Button x:Name="BackupBrowserButton" Style="{StaticResource DefaultButton}" Content="Резервные копии"
+                <Button x:Name="BackupBrowserButton" Style="{StaticResource DefaultButton}" Content="{DynamicResource EditorBackupsButton}"
                         MinWidth="124" Padding="12,5" Margin="0,0,7,0" Visibility="Collapsed"
                         Click="BackupBrowser_Click"/>
-                <Button Style="{StaticResource DefaultButton}" Content="Импорт" ClickMode="Press" MinWidth="74" Padding="12,5" Margin="0,0,7,0" Click="Import_Click"/>
-                <Button Style="{StaticResource DefaultButton}" Content="Экспорт" ClickMode="Press" MinWidth="78" Padding="12,5" Margin="0,0,7,0" Click="Export_Click"/>
-                <Button Style="{StaticResource DefaultButton}" Content="Настройки" ClickMode="Press" MinWidth="88" Padding="12,5" Click="Settings_Click"/>
+                <Button Style="{StaticResource DefaultButton}" Content="{DynamicResource EditorImportButton}" ClickMode="Press" MinWidth="74" Padding="12,5" Margin="0,0,7,0" Click="Import_Click"/>
+                <Button Style="{StaticResource DefaultButton}" Content="{DynamicResource EditorExportButton}" ClickMode="Press" MinWidth="78" Padding="12,5" Margin="0,0,7,0" Click="Export_Click"/>
+                <Button Style="{StaticResource DefaultButton}" Content="{DynamicResource EditorSettingsButton}" ClickMode="Press" MinWidth="88" Padding="12,5" Click="Settings_Click"/>
             </StackPanel>
         </Grid>
 
@@ -102,7 +102,7 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <TextBlock Grid.Row="1" Text="Перетащите фразу или используйте кнопки ниже" FontSize="11"
+                    <TextBlock Grid.Row="1" Text="{DynamicResource EditorReorderHint}" FontSize="11"
                                Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center"/>
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
@@ -110,14 +110,14 @@
                             <ColumnDefinition Width="*"/><ColumnDefinition Width="7"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Style="{StaticResource DefaultButton}" Content="Добавить" MinWidth="76" Padding="9,4" Click="Add_Click"/>
-                        <Button Grid.Column="2" Style="{StaticResource DefaultButton}" Content="Копия" MinWidth="68" Padding="9,4" Click="Duplicate_Click"/>
-                        <Button Grid.Column="4" Style="{StaticResource DefaultButton}" Content="Удалить" MinWidth="76" Padding="9,4" Click="Delete_Click"/>
+                        <Button Grid.Column="0" Style="{StaticResource DefaultButton}" Content="{DynamicResource EditorAddButton}" MinWidth="76" Padding="9,4" Click="Add_Click"/>
+                        <Button Grid.Column="2" Style="{StaticResource DefaultButton}" Content="{DynamicResource EditorDuplicateButton}" MinWidth="68" Padding="9,4" Click="Duplicate_Click"/>
+                        <Button Grid.Column="4" Style="{StaticResource DefaultButton}" Content="{DynamicResource EditorDeleteButton}" MinWidth="76" Padding="9,4" Click="Delete_Click"/>
                     </Grid>
                     <Grid Grid.Row="4">
                         <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="7"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-                        <Button x:Name="MoveUpButton" Grid.Column="0" Style="{StaticResource DefaultButton}" Content="↑ Выше" MinWidth="84" Padding="9,4" Click="MoveUp_Click"/>
-                        <Button x:Name="MoveDownButton" Grid.Column="2" Style="{StaticResource DefaultButton}" Content="↓ Ниже" MinWidth="84" Padding="9,4" Click="MoveDown_Click"/>
+                        <Button x:Name="MoveUpButton" Grid.Column="0" Style="{StaticResource DefaultButton}" Content="{DynamicResource EditorMoveUpButton}" MinWidth="84" Padding="9,4" Click="MoveUp_Click"/>
+                        <Button x:Name="MoveDownButton" Grid.Column="2" Style="{StaticResource DefaultButton}" Content="{DynamicResource EditorMoveDownButton}" MinWidth="84" Padding="9,4" Click="MoveDown_Click"/>
                     </Grid>
                 </Grid>
             </Border>
@@ -130,17 +130,17 @@
                         <RowDefinition Height="19"/><RowDefinition Height="32"/><RowDefinition Height="13"/>
                         <RowDefinition Height="19"/><RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="Название (необязательно)" FontSize="11.5" FontWeight="SemiBold"/>
+                    <TextBlock Grid.Row="0" Text="{DynamicResource EditorNameLabel}" FontSize="11.5" FontWeight="SemiBold"/>
                     <TextBox x:Name="TitleBox" Grid.Row="1" Style="{StaticResource EditorTextBox}"
                              Text="{Binding Title, UpdateSourceTrigger=LostFocus}"/>
-                    <TextBlock Grid.Row="3" Text="Категория (необязательно)" FontSize="11.5" FontWeight="SemiBold"/>
+                    <TextBlock Grid.Row="3" Text="{DynamicResource EditorCategoryLabel}" FontSize="11.5" FontWeight="SemiBold"/>
                     <Grid Grid.Row="4">
                         <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="14"/><ColumnDefinition Width="110"/></Grid.ColumnDefinitions>
                         <TextBox x:Name="CategoryBox" Grid.Column="0" Style="{StaticResource EditorTextBox}"
                                  Text="{Binding Category, UpdateSourceTrigger=LostFocus}"/>
-                        <CheckBox Grid.Column="2" Content="★ Избранное" VerticalAlignment="Center" IsChecked="{Binding IsFavorite, UpdateSourceTrigger=PropertyChanged}"/>
+                        <CheckBox Grid.Column="2" Content="{DynamicResource EditorFavoriteCheck}" VerticalAlignment="Center" IsChecked="{Binding IsFavorite, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
-                    <TextBlock Grid.Row="6" Text="Текст фразы" FontSize="11.5" FontWeight="SemiBold"/>
+                    <TextBlock Grid.Row="6" Text="{DynamicResource EditorBodyLabel}" FontSize="11.5" FontWeight="SemiBold"/>
                     <TextBox Grid.Row="7" Style="{StaticResource EditorTextBox}" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"
                              AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" VerticalContentAlignment="Top"
                              VerticalScrollBarVisibility="Auto"/>
@@ -150,8 +150,8 @@
 
         <Grid Grid.Row="2" VerticalAlignment="Bottom">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Style="{StaticResource DefaultButton}" Content="Закрыть" MinWidth="86" Padding="12,5" Margin="0,0,7,0" Click="Close_Click"/>
-                <Button Style="{StaticResource PrimaryButton}" Content="Сохранить" MinWidth="98" Padding="12,5" Click="Save_Click"/>
+                <Button Style="{StaticResource DefaultButton}" Content="{DynamicResource EditorCloseButton}" MinWidth="86" Padding="12,5" Margin="0,0,7,0" Click="Close_Click"/>
+                <Button Style="{StaticResource PrimaryButton}" Content="{DynamicResource EditorSaveButton}" MinWidth="98" Padding="12,5" Click="Save_Click"/>
             </StackPanel>
         </Grid>
     </Grid>
