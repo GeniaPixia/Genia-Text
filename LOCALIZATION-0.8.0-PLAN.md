@@ -35,3 +35,14 @@ Run scripts/Test-Language-0.8.0.ps1 from a clean develop/0.8.0 checkout. The pre
 - No Core, data model, persistence, hotkey or runtime behavior changes.
 - New isolated lab run should confirm visual clipping, keyboard focus and
   both languages before a Beta candidate.
+
+## Alpha 3 — recovery backup display locale polish
+
+The English Recovery screenshot exposed legacy Russian backup reason labels and
+file-size units. The UI now translates known backup reason strings and formats
+backup sizes via presentation-only WPF converters. Unknown/custom reason values
+pass through unchanged. BackupBrowserService, PhraseStore, snapshot filenames,
+serialized data, restore and delete logic remain unchanged.
+
+Two pure logic tests cover recognized and unknown reason handling.
+This is a development checkpoint pending Windows build and visual acceptance.

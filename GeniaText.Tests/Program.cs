@@ -15,6 +15,8 @@ internal static class Program
         Run("Auto language resolves other cultures to English", EnglishAuto);
         Run("Manual language overrides Windows culture", ManualOverride);
         Run("Invalid language setting is sanitized", InvalidLanguage);
+        Run("Known backup reasons have RU/EN resource keys", KnownBackupReasons);
+        Run("Unknown backup reasons remain unchanged", UnknownBackupReasons);
         Run("Smart templates expand deterministic tokens", SmartTemplatesExpand);
         Run("Smart templates preserve unknown tokens", SmartTemplatesPreserveUnknown);
         Run("Advanced search handles multi-term query", AdvancedSearchMultiTerm);
@@ -90,6 +92,20 @@ internal static class Program
         var settings = new AppSettings { InterfaceLanguage = "invalid" };
         SettingsSanitizer.Sanitize(settings);
         AssertEqual("Auto", settings.InterfaceLanguage);
+    }
+
+    private static void KnownBackupReasons()
+    {
+        AssertEqual("BackupReasonStartup", BackupReasonLocalization.ResourceKeyFor("Запуск программы"));
+        AssertEqual("BackupReasonBeforeImport", BackupReasonLocalization.ResourceKeyFor("Перед импортом"));
+        AssertEqual("BackupReasonPeriodic", BackupReasonLocalization.ResourceKeyFor("Периодическая"));
+        AssertEqual("BackupReasonGeneric", BackupReasonLocalization.ResourceKeyFor("Резервная копия"));
+    }
+
+    private static void UnknownBackupReasons()
+    {
+        AssertEqual<string?>(null, BackupReasonLocalization.ResourceKeyFor("manual-snapshot"));
+        AssertEqual<string?>(null, BackupReasonLocalization.ResourceKeyFor(null));
     }
 
     private static void SmartTemplatesExpand()

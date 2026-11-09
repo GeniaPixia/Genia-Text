@@ -16,5 +16,6 @@
     <Compile Include="..\GeniaText\Features\SafetyPackService.cs" Link="Features\SafetyPackService.cs" />
     <Compile Include="..\GeniaText\Features\SettingsSanitizer.cs" Link="Features\SettingsSanitizer.cs" />
     <Compile Include="..\GeniaText\Features\InterfaceLanguagePolicy.cs" Link="Features\InterfaceLanguagePolicy.cs" />
+    <Compile Include="..\GeniaText\Features\BackupReasonLocalization.cs" Link="Features\BackupReasonLocalization.cs" />
   </ItemGroup>
 </Project>

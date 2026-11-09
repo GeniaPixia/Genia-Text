@@ -188,4 +188,10 @@
     <sys:String x:Key="AppHotkeyRegistrationError">Не удалось зарегистрировать глобальную горячую клавишу. Открывайте GeniaText через значок в трее и выберите другую комбинацию в настройках.</sys:String>
     <sys:String x:Key="AppAutostartError">Не удалось изменить автозапуск.</sys:String>
     <sys:String x:Key="SettingsAppRulesExample">Пример: chrome=Web&#10;telegram=Telegram</sys:String>
+    <sys:String x:Key="BackupReasonStartup">Запуск программы</sys:String>
+    <sys:String x:Key="BackupReasonBeforeImport">Перед импортом</sys:String>
+    <sys:String x:Key="BackupReasonPeriodic">Периодическая</sys:String>
+    <sys:String x:Key="BackupReasonGeneric">Резервная копия</sys:String>
+    <sys:String x:Key="BackupSizeBytes">{0:N0} Б</sys:String>
+    <sys:String x:Key="BackupSizeKilobytes">{0:N1} КБ</sys:String>
 </ResourceDictionary>

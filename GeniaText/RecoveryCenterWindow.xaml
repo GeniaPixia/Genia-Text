@@ -1,10 +1,15 @@
 <Window x:Class="GeniaText.RecoveryCenterWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="clr-namespace:GeniaText.Services"
         Title="{DynamicResource RecoveryTitle}" Width="920" Height="600"
         MinWidth="800" MinHeight="500" WindowStartupLocation="CenterOwner"
         Background="{StaticResource WindowBackground}"
         Icon="pack://application:,,,/Assets/GeniaText.ico">
+    <Window.Resources>
+        <ui:BackupReasonDisplayConverter x:Key="BackupReasonDisplayConverter"/>
+        <ui:BackupSizeDisplayConverter x:Key="BackupSizeDisplayConverter"/>
+    </Window.Resources>
     <Grid Margin="16,14,16,14">
         <Grid.RowDefinitions>
             <RowDefinition Height="58"/>
@@ -137,7 +142,7 @@
                                     <StackPanel>
                                         <TextBlock Text="{Binding CreatedAtLabel, Mode=OneWay}" FontWeight="SemiBold"/>
                                         <TextBlock Margin="0,2,0,0" FontSize="10.5" Foreground="{StaticResource TextSecondary}">
-                                            <Run Text="{Binding Reason, Mode=OneWay}"/><Run Text=" · "/><Run Text="{Binding SizeLabel, Mode=OneWay}"/>
+                                            <Run Text="{Binding Reason, Mode=OneWay, Converter={StaticResource BackupReasonDisplayConverter}}"/><Run Text=" · "/><Run Text="{Binding SizeBytes, Mode=OneWay, Converter={StaticResource BackupSizeDisplayConverter}}"/>
                                         </TextBlock>
                                     </StackPanel>
                                 </DataTemplate>
