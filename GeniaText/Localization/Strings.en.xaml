@@ -187,4 +187,5 @@
     <sys:String x:Key="AppHotkeyFallback">The saved hotkey is already in use. GeniaText switched back to Ctrl+Space.</sys:String>
     <sys:String x:Key="AppHotkeyRegistrationError">Could not register the global hotkey. Open GeniaText from the system tray and choose another shortcut in Settings.</sys:String>
     <sys:String x:Key="AppAutostartError">Could not change startup settings.</sys:String>
+    <sys:String x:Key="SettingsAppRulesExample">Example: chrome=Web&#10;telegram=Telegram</sys:String>
 </ResourceDictionary>

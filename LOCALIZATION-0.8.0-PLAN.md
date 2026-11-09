@@ -23,3 +23,15 @@ The five frozen files in CORE-CONTRACT.md are excluded. This commit is not a wor
 ## Isolated Windows UI smoke test
 
 Run scripts/Test-Language-0.8.0.ps1 from a clean develop/0.8.0 checkout. The preflight verifies stable tag, frozen Core blobs and Git cleanliness; builds and tests; copies compiled files to a NEW %TEMP% lab directory and writes a TXT transcript. The lab has a portable marker and starts with no copied phrases or settings. The script never starts the app. Close any existing GeniaText process first (single-instance mutex). Test Auto, Russian and English with restarts and check Picker, Settings, editor, recovery, import and system tray. Stable 0.7.0 binaries and user data are not touched.
+
+## Alpha 2 — settings UI polish (pending Windows acceptance)
+
+- Default Settings window height 690 → 598; minimum height 620 → 548.
+- General tab's portable/language sections tightened while preserving control IDs
+  and all settings semantics.
+- Features remains scrollable; cards use smaller paddings and improved 11.5 pt
+  description readability (RU and EN).
+- App-profile rules tooltip is localized using an additional dictionary key.
+- No Core, data model, persistence, hotkey or runtime behavior changes.
+- New isolated lab run should confirm visual clipping, keyboard focus and
+  both languages before a Beta candidate.

@@ -187,4 +187,5 @@
     <sys:String x:Key="AppHotkeyFallback">Сохранённая горячая клавиша занята другой программой. GeniaText вернулся к Ctrl+Space.</sys:String>
     <sys:String x:Key="AppHotkeyRegistrationError">Не удалось зарегистрировать глобальную горячую клавишу. Открывайте GeniaText через значок в трее и выберите другую комбинацию в настройках.</sys:String>
     <sys:String x:Key="AppAutostartError">Не удалось изменить автозапуск.</sys:String>
+    <sys:String x:Key="SettingsAppRulesExample">Пример: chrome=Web&#10;telegram=Telegram</sys:String>
 </ResourceDictionary>
