@@ -25,4 +25,36 @@ running GeniaText, then launch the extracted EXE. Check RU and EN language
 selection after restart, Ctrl+Space paste workflow, editor, backup recovery,
 portable local settings and phrases. Do not use Stable's data folder.
 
-Release gate remains HOLD until the Windows extracted-ZIP test passes.
+## Windows release-candidate acceptance (2026-11-09)
+
+Tested source commit: `a7ca8bedadeeede66ad806ecaf10762fad6631ab`. Use THIS commit as the GitHub
+pre-release target, even if documentation commits advance develop afterward.
+
+- Windows Release build and self-tests: 25 passed, 0 failed.
+- Self-contained single-file publish: PASS.
+- ZIP consists of GeniaText.exe and GeniaText.portable: PASS.
+- ZIP entries verified against source files by SHA-256: PASS.
+- SHA-256 of entire ZIP rechecked before extraction: PASS.
+- Extracted EXE hash verified: PASS.
+- Launch from extracted ZIP: PASS (user report).
+- Ctrl+Space -> select -> paste into another application: PASS (user report).
+- Test phrase and manually selected English interface language persisted after
+  complete application exit and restart: PASS (user report).
+- RU/EN visual inspection and English backup labels: PASS on Alpha 3, whose
+  application code remains identical apart from beta version metadata.
+- v0.7.0 stable remains unchanged; Git and frozen Core gates: PASS.
+
+Artifacts on the user's Windows PC (not uploaded to GitHub yet):
+
+- `D:\GeniaText\artifacts\beta1-a7ca8be\GeniaText-0.8.0-beta.1-portable-win-x64.zip`
+- ZIP SHA-256: `F5D6731E024A5C4285981E61E355765A7DDE91D9D5DEE8EF39892BE3AF282142`
+- EXE SHA-256: `2205721501A98344C9BD97D633A62D44616A8E024BAA71E37C5828F3EA14C927`
+- Sidecar: ZIP `.sha256` file next to the ZIP.
+
+Status: `BETA1_RUNTIME_SMOKE=PASS`; `READY_FOR_PRERELEASE_ASSET_UPLOAD`.
+The GitHub pre-release is NOT published or tagged by this document.
+
+Before publishing: target tag `v0.8.0-beta.1` at the tested commit
+`a7ca8bedadeeede66ad806ecaf10762fad6631ab`; upload the exact verified ZIP and the matching .sha256 file,
+mark the release as a *pre-release*, and leave v0.7.0 as the latest
+stable release. Verify the public assets/checksum after upload.

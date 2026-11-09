@@ -1,3 +1,18 @@
+# GeniaText 0.8.0-beta.1
+
+## Beta acceptance (2026-11-09)
+- Added RU/EN UI with Auto, Russian and English language preferences.
+- Settings compacted; localization polished in Picker/editor/import/recovery/tray.
+- Recovery backup reason and file-size labels translated for English.
+- Windows Release build + self-tests: 25 passed, 0 failed.
+- Portable single-file ZIP and extracted EXE SHA-256: PASS.
+- Windows extracted-ZIP launch, Ctrl+Space paste, phrase/language persistence
+  after restart: user-confirmed PASS.
+- Tested source commit: `a7ca8bedadeeede66ad806ecaf10762fad6631ab`; separate docs commits do not change
+  the tested binary.
+- Frozen Core remains unchanged. Stable 0.7.0 tag/release untouched.
+- Candidate accepted for pre-release publication; GitHub asset upload pending.
+
 # GeniaText 0.7.0
 
 ## Stable release
