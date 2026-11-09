@@ -46,3 +46,7 @@ serialized data, restore and delete logic remain unchanged.
 
 Two pure logic tests cover recognized and unknown reason handling.
 This is a development checkpoint pending Windows build and visual acceptance.
+
+## 0.8.0 Beta 1 packaging candidate
+
+Separate candidate package script: scripts/Build-Beta1-Portable.ps1. See BETA1-0.8.0-VALIDATION.md. The 0.7.0 build-portable.ps1 remains untouched. Release gate HOLD pending Windows extracted-ZIP validation.
